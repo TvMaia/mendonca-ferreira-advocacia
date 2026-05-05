@@ -1,0 +1,2429 @@
+---
+// Mendonça & Ferreira Advocacia - Landing Page
+// Estilo: Luxury / Editorial / Dark & Gold — v2.0
+---
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mendonça & Ferreira Advocacia Criminal — Defesa estratégica para crimes empresariais, ambientais e complexos. Excelência jurídica com discrição e resultado." />
+  <meta name="robots" content="index, follow" />
+  <title>Mendonça & Ferreira Advocacia | Defesa Criminal Estratégica</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mendonça & Ferreira Advocacia" />
+  <meta property="og:description" content="Defesa criminal de alto nível para casos complexos. Crimes empresariais, ambientais e tributários." />
+  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════
+       DESIGN TOKENS
+    ═══════════════════════════════════════ */
+    :root {
+      --gold:        #C9A84C;
+      --gold-light:  #E8C97A;
+      --gold-dark:   #8B6914;
+      --black:       #0A0A0A;
+      --dark:        #111111;
+      --dark-2:      #161616;
+      --dark-3:      #1E1C1A;
+      --dark-4:      #252320;
+      --white:       #F5F0E8;
+      --white-dim:   rgba(245, 240, 232, 0.65);
+      --white-faint: rgba(245, 240, 232, 0.12);
+      --gold-rgba:   rgba(201, 168, 76, 0.15);
+      --gold-border: rgba(201, 168, 76, 0.25);
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Jost', sans-serif;
+
+      --max-w: 1240px;
+      --ease:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    /* ═══════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ═══════════════════════════════════════
+       NOISE TEXTURE OVERLAY
+    ═══════════════════════════════════════ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGE LOADER
+    ═══════════════════════════════════════ */
+    #loader {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 99998;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      transition: opacity 0.7s var(--ease), visibility 0.7s;
+    }
+    #loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .loader__mf {
+      font-family: var(--font-display);
+      font-size: 5rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      animation: loaderFadeIn 0.9s var(--ease) both;
+    }
+    .loader__bar {
+      width: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      animation: loaderBar 0.8s var(--ease) 0.4s both;
+    }
+    .loader__label {
+      font-family: var(--font-body);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      opacity: 0;
+      animation: loaderFadeIn 0.6s var(--ease) 0.6s both;
+    }
+    @keyframes loaderFadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes loaderBar {
+      to { width: 80px; }
+    }
+
+    /* ═══════════════════════════════════════
+       SCROLL PROGRESS BAR
+    ═══════════════════════════════════════ */
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(to right, var(--gold-dark), var(--gold), var(--gold-light));
+      z-index: 99999;
+      transition: width 0.08s linear;
+    }
+
+    /* ═══════════════════════════════════════
+       CUSTOM CURSOR
+    ═══════════════════════════════════════ */
+    @media (hover: hover) and (pointer: fine) {
+      body { cursor: none; }
+      a, button, [role="button"], .area-card, .faq__question, .result-card { cursor: none; }
+
+      .cursor {
+        position: fixed;
+        width: 34px;
+        height: 34px;
+        border: 1px solid rgba(201, 168, 76, 0.55);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99997;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        transition: transform 0.18s var(--ease), width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s, border-color 0.3s;
+        will-change: transform;
+      }
+      .cursor.hovering {
+        width: 52px;
+        height: 52px;
+        background: rgba(201, 168, 76, 0.07);
+        border-color: rgba(201, 168, 76, 0.8);
+      }
+      .cursor-dot {
+        position: fixed;
+        width: 4px;
+        height: 4px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 99997;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+        transition: transform 0.04s;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       UTILITY CLASSES
+    ═══════════════════════════════════════ */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .gold { color: var(--gold); }
+    .gold-line {
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2.25rem;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.3s var(--ease), color 0.3s var(--ease);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gold);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease);
+      z-index: 0;
+    }
+    .btn:hover::before { transform: scaleX(1); }
+    .btn:hover { color: var(--black); }
+    .btn span, .btn svg { position: relative; z-index: 1; }
+
+    .btn-filled {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .btn-filled::before { background: var(--gold-light); }
+    .btn-filled:hover { color: var(--black); }
+
+    /* ═══════════════════════════════════════
+       SCROLL REVEAL — BASE & VARIANTS
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.85s var(--ease), transform 0.85s var(--ease);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-36px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(36px);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.93);
+      transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
+    }
+    .reveal.visible,
+    .reveal-left.visible,
+    .reveal-right.visible,
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ═══════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1.5rem 0;
+      transition: background 0.4s var(--ease), padding 0.4s var(--ease), backdrop-filter 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(16px);
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--gold-border);
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav__logo {
+      display: flex;
+      flex-direction: column;
+      gap: 0.1rem;
+    }
+    .nav__logo-mf {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .nav__logo-name {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .nav__links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav__links a {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      transition: color 0.3s;
+      position: relative;
+    }
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width 0.3s var(--ease);
+    }
+    .nav__links a:hover { color: var(--gold); }
+    .nav__links a:hover::after { width: 100%; }
+    .nav__cta {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.5rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      transition: background 0.3s, color 0.3s;
+    }
+    .nav__cta:hover {
+      background: var(--gold);
+      color: var(--black);
+    }
+    .nav__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .nav__hamburger span {
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+      transition: all 0.3s;
+    }
+    .nav__hamburger.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .nav__hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__hamburger.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* ═══════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 8rem;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('/images/hero-bg.jpg');
+      background-size: cover;
+      background-position: center top;
+      transform: scale(1.05);
+      animation: heroZoom 12s var(--ease) forwards;
+    }
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+
+    .hero__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(10,10,10,0.3) 0%,
+        rgba(10,10,10,0.5) 35%,
+        rgba(10,10,10,0.88) 75%,
+        rgba(10,10,10,1) 100%
+      );
+    }
+    .hero__overlay::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 20% 80%, rgba(201,168,76,0.06), transparent);
+    }
+
+    .hero__gold-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 60%;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      animation: goldLineIn 1.8s var(--ease) 0.5s both;
+    }
+    .hero__h-line {
+      position: absolute;
+      bottom: 7rem;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(to right, var(--gold), rgba(201,168,76,0.3), transparent);
+      animation: heroHLine 1.4s var(--ease) 1.3s both;
+    }
+    @keyframes goldLineIn {
+      from { height: 0; opacity: 0; }
+      to { height: 60%; opacity: 1; }
+    }
+    @keyframes heroHLine {
+      to { width: 35%; }
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      max-width: 820px;
+    }
+
+    .hero__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      animation: fadeUp 1s var(--ease) 0.4s both;
+    }
+    .hero__tag::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero__headline {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 1s var(--ease) 0.6s both;
+    }
+    .hero__headline em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero__sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--white-dim);
+      max-width: 540px;
+      margin-bottom: 3rem;
+      animation: fadeUp 1s var(--ease) 0.8s both;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      animation: fadeUp 1s var(--ease) 1s both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      animation: fadeUp 1s var(--ease) 1.4s both;
+    }
+    .hero__scroll span {
+      writing-mode: vertical-rl;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+    }
+    .hero__scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ═══════════════════════════════════════
+       CREDENCIAL STRIP
+    ═══════════════════════════════════════ */
+    .strip {
+      border-top: 1px solid var(--gold-border);
+      border-bottom: 1px solid var(--gold-border);
+      background: var(--dark-2);
+      padding: 1.5rem 0;
+      overflow: hidden;
+    }
+    .strip__inner {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      animation: stripScroll 30s linear infinite;
+      white-space: nowrap;
+    }
+    .strip:hover .strip__inner {
+      animation-play-state: paused;
+    }
+    @keyframes stripScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .strip__item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      flex-shrink: 0;
+      transition: color 0.3s;
+    }
+    .strip:hover .strip__item:hover {
+      color: var(--gold);
+    }
+    .strip__item::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.4rem;
+    }
+
+    /* ═══════════════════════════════════════
+       ABOUT / POSICIONAMENTO
+    ═══════════════════════════════════════ */
+    .about {
+      padding: 10rem 0;
+      position: relative;
+    }
+    .about::before {
+      content: 'MF';
+      position: absolute;
+      right: -2%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(14rem, 22vw, 22rem);
+      font-weight: 700;
+      color: var(--white-faint);
+      pointer-events: none;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+    .about__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .about__image-wrap {
+      position: relative;
+    }
+    .about__image-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -1.5rem -1.5rem 1.5rem 1.5rem;
+      border: 1px solid var(--gold-border);
+      z-index: 0;
+    }
+    .about__image {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      object-position: top center;
+      filter: grayscale(20%);
+      position: relative;
+      z-index: 1;
+    }
+    .about__image-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: linear-gradient(145deg, var(--dark-3) 0%, var(--dark-4) 60%, #1a1814 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+    .about__image-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 20px,
+          rgba(201,168,76,0.025) 20px,
+          rgba(201,168,76,0.025) 21px
+        );
+    }
+    .about__image-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 2rem;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .placeholder-inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-align: center;
+    }
+    .placeholder-inner svg {
+      opacity: 0.2;
+      color: var(--gold);
+    }
+    .placeholder-inner .ph-label {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      opacity: 0.6;
+    }
+    .placeholder-inner .ph-size {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      opacity: 0.5;
+    }
+    .about__badge {
+      position: absolute;
+      bottom: -2rem;
+      right: -2rem;
+      width: 9rem;
+      height: 9rem;
+      background: var(--gold);
+      color: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 2;
+    }
+    .about__badge-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+    .about__badge-text {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+    .about__eyebrow {
+      margin-bottom: 1rem;
+    }
+    .about__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 2rem;
+    }
+    .about__heading em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .about__text {
+      color: var(--white-dim);
+      margin-bottom: 1.25rem;
+      font-size: 0.97rem;
+    }
+    .about__divider {
+      width: 100%;
+      height: 1px;
+      background: var(--gold-border);
+      margin: 2.5rem 0;
+    }
+    .about__stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .about__stat-num {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 500;
+      color: var(--gold);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .about__stat-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-top: 0.3rem;
+    }
+
+    /* ═══════════════════════════════════════
+       AREAS DE ATUAÇÃO
+    ═══════════════════════════════════════ */
+    .areas {
+      padding: 8rem 0;
+      background: var(--dark-2);
+      position: relative;
+    }
+    .areas::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .areas__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .areas__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      margin-top: 1rem;
+      line-height: 1.2;
+    }
+    .areas__heading em { font-style: italic; color: var(--gold); }
+
+    .areas__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--gold-border);
+      border: 1.5px solid var(--gold-border);
+    }
+
+    .area-card {
+      background: var(--dark);
+      padding: 3rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      cursor: default;
+    }
+    .area-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.4s var(--ease);
+    }
+    .area-card:hover {
+      background: var(--dark-3);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(201, 168, 76, 0.07);
+    }
+    .area-card:hover::before { transform: scaleX(1); }
+
+    .area-card__num {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.75rem;
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 700;
+      color: rgba(245, 240, 232, 0.05);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.4s var(--ease);
+      letter-spacing: -0.02em;
+    }
+    .area-card:hover .area-card__num {
+      color: rgba(201, 168, 76, 0.09);
+    }
+    .area-card__icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1.75rem;
+      color: var(--gold);
+      opacity: 0.8;
+      transition: opacity 0.3s, transform 0.4s var(--ease);
+    }
+    .area-card:hover .area-card__icon {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+    .area-card__tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .area-card__title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+    .area-card__text {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      line-height: 1.75;
+    }
+    .area-card--highlight {
+      background: var(--dark-3);
+    }
+    .area-card--highlight .area-card__tag {
+      background: var(--gold-rgba);
+      display: inline-block;
+      padding: 0.2rem 0.8rem;
+      border: 1px solid var(--gold-border);
+    }
+
+    /* ═══════════════════════════════════════
+       DIFERENCIAIS
+    ═══════════════════════════════════════ */
+    .diff {
+      padding: 9rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .diff__bg-text {
+      position: absolute;
+      left: -3%;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(12rem, 18vw, 18rem);
+      font-weight: 700;
+      color: var(--white-faint);
+      pointer-events: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .diff__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      position: relative;
+    }
+    .diff__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin-top: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    .diff__heading em { font-style: italic; color: var(--gold); }
+    .diff__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+    .diff__item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--gold-border);
+      transition: padding-left 0.3s var(--ease);
+    }
+    .diff__item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .diff__num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.5;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 2.5rem;
+    }
+    .diff__item-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      margin-bottom: 0.4rem;
+    }
+    .diff__item-text {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+    }
+    .diff__visual {
+      position: relative;
+    }
+    .diff__image {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: grayscale(30%);
+    }
+    .diff__image-placeholder {
+      width: 100%;
+      aspect-ratio: 3/4;
+      background: linear-gradient(145deg, var(--dark-3) 0%, var(--dark-4) 60%, #1a1814 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .diff__image-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 20px,
+          rgba(201,168,76,0.025) 20px,
+          rgba(201,168,76,0.025) 21px
+        );
+    }
+    .diff__image-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 2rem;
+      border: 1px solid rgba(201,168,76,0.15);
+    }
+    .diff__quote-box {
+      position: absolute;
+      bottom: -2.5rem;
+      left: -2.5rem;
+      background: var(--gold);
+      color: var(--black);
+      padding: 2rem;
+      max-width: 280px;
+    }
+    .diff__quote-text {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 0.75rem;
+    }
+    .diff__quote-attr {
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ═══════════════════════════════════════
+       PROCESSO
+    ═══════════════════════════════════════ */
+    .process {
+      padding: 8rem 0;
+      background: var(--dark-2);
+      position: relative;
+    }
+    .process::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .process__header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+    .process__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      margin-top: 1rem;
+    }
+    .process__heading em { font-style: italic; color: var(--gold); }
+
+    .process__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .process__steps::before {
+      content: '';
+      position: absolute;
+      top: 2rem;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: var(--gold-border);
+      z-index: 0;
+    }
+
+    .process__step {
+      padding: 0 1.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .process__step-dot {
+      width: 4rem;
+      height: 4rem;
+      border: 1px solid var(--gold);
+      background: var(--dark-2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--gold);
+      transition: background 0.4s var(--ease), color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .process__step-dot.active {
+      background: var(--gold);
+      color: var(--black);
+      box-shadow: 0 0 24px rgba(201, 168, 76, 0.35);
+    }
+    .process__step:hover .process__step-dot {
+      background: var(--gold);
+      color: var(--black);
+      box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+    }
+    .process__step-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+    .process__step-text {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      line-height: 1.7;
+    }
+
+    /* ═══════════════════════════════════════
+       TESTIMONIALS / CASOS
+    ═══════════════════════════════════════ */
+    .results {
+      padding: 9rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .results__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+    .results__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      margin-top: 1rem;
+    }
+    .results__heading em { font-style: italic; color: var(--gold); }
+    .results__note {
+      font-size: 0.78rem;
+      color: var(--white-dim);
+      max-width: 280px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .results__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .result-card {
+      background: var(--dark-2);
+      border: 1px solid var(--gold-border);
+      padding: 2.5rem;
+      position: relative;
+      transition: border-color 0.3s, transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .result-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 36px rgba(201, 168, 76, 0.07);
+    }
+    .result-card::before {
+      content: '"';
+      position: absolute;
+      top: 1.5rem;
+      right: 2rem;
+      font-family: var(--font-display);
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.12;
+      line-height: 1;
+    }
+    .result-card__type {
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      font-weight: 500;
+    }
+    .result-card__outcome {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .result-card__text {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .result-card__client {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--gold-border);
+    }
+    .result-card__avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--gold-rgba);
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--gold);
+    }
+    .result-card__name {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+    .result-card__role {
+      font-size: 0.7rem;
+      color: var(--white-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════
+       CTA CENTRAL
+    ═══════════════════════════════════════ */
+    .cta-section {
+      padding: 8rem 0;
+      background: var(--dark-3);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 50%, var(--gold-rgba), transparent);
+      pointer-events: none;
+    }
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+    .cta__corner {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.3;
+    }
+    .cta__corner--tl { top: 2rem; left: 2rem; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+    .cta__corner--tr { top: 2rem; right: 2rem; border-top: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+    .cta__corner--bl { bottom: 2rem; left: 2rem; border-bottom: 1px solid var(--gold); border-left: 1px solid var(--gold); }
+    .cta__corner--br { bottom: 2rem; right: 2rem; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); }
+    .cta-section .gold-line {
+      margin: 0 auto 1.5rem;
+    }
+    .cta__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .cta__heading em { font-style: italic; color: var(--gold); }
+    .cta__sub {
+      font-size: 1rem;
+      color: var(--white-dim);
+      max-width: 540px;
+      margin: 0 auto 3rem;
+      line-height: 1.75;
+    }
+    .cta__actions {
+      display: flex;
+      gap: 1.25rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta__disclaimer {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--white-dim);
+      opacity: 0.6;
+      letter-spacing: 0.05em;
+    }
+
+    /* ═══════════════════════════════════════
+       FAQ
+    ═══════════════════════════════════════ */
+    .faq {
+      padding: 8rem 0;
+      background: var(--dark-2);
+    }
+    .faq__grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 6rem;
+      align-items: flex-start;
+    }
+    .faq__heading {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-top: 1rem;
+      position: sticky;
+      top: 120px;
+    }
+    .faq__heading em { font-style: italic; color: var(--gold); }
+    .faq__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .faq__item {
+      border-bottom: 1px solid var(--gold-border);
+      transition: padding-left 0.35s var(--ease), border-left 0.35s var(--ease);
+    }
+    .faq__item.open {
+      padding-left: 1rem;
+      border-left: 2px solid var(--gold);
+    }
+    .faq__question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.75rem 0;
+      cursor: pointer;
+      gap: 1rem;
+    }
+    .faq__q-text {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .faq__item.open .faq__q-text {
+      color: var(--gold);
+    }
+    .faq__icon {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      color: var(--gold);
+      transition: transform 0.35s var(--ease);
+    }
+    .faq__item.open .faq__icon { transform: rotate(45deg); }
+    .faq__answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s var(--ease), padding 0.3s;
+    }
+    .faq__item.open .faq__answer {
+      max-height: 400px;
+      padding-bottom: 1.75rem;
+    }
+    .faq__answer-text {
+      font-size: 0.92rem;
+      color: var(--white-dim);
+      line-height: 1.8;
+    }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    .footer {
+      background: var(--black);
+      border-top: 1px solid var(--gold-border);
+      padding: 5rem 0 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .footer__watermark {
+      position: absolute;
+      bottom: -1rem;
+      right: -1rem;
+      font-family: var(--font-display);
+      font-size: 12rem;
+      font-weight: 700;
+      color: rgba(245, 240, 232, 0.03);
+      line-height: 1;
+      pointer-events: none;
+      letter-spacing: -0.05em;
+    }
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      position: relative;
+    }
+    .footer__brand-mf {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .footer__brand-name {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      margin-bottom: 1.5rem;
+    }
+    .footer__brand-text {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      line-height: 1.75;
+      max-width: 320px;
+      margin-bottom: 1.5rem;
+    }
+    .footer__social {
+      display: flex;
+      gap: 0.75rem;
+    }
+    .footer__social-link {
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white-dim);
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+    }
+    .footer__social-link:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-rgba);
+    }
+    .footer__col-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+    }
+    .footer__links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .footer__links a {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      transition: color 0.3s, padding-left 0.3s var(--ease);
+      display: inline-block;
+    }
+    .footer__links a:hover {
+      color: var(--gold);
+      padding-left: 0.5rem;
+    }
+    .footer__contact-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      margin-bottom: 0.85rem;
+    }
+    .footer__contact-item svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--gold);
+    }
+    .footer__bottom {
+      border-top: 1px solid var(--gold-border);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--white-dim);
+      opacity: 0.6;
+      position: relative;
+    }
+
+    /* ═══════════════════════════════════════
+       WHATSAPP FLOAT
+    ═══════════════════════════════════════ */
+    .wa-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .wa-float__label {
+      background: var(--dark-2);
+      border: 1px solid var(--gold-border);
+      padding: 0.5rem 1rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white-dim);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      white-space: nowrap;
+    }
+    .wa-float:hover .wa-float__label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .wa-float__btn {
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .wa-float__btn::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid rgba(37, 211, 102, 0.4);
+      animation: waPulse 2.2s ease infinite;
+    }
+    .wa-float__btn::after {
+      content: '';
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 1px solid rgba(37, 211, 102, 0.2);
+      animation: waPulse 2.2s ease 0.4s infinite;
+    }
+    @keyframes waPulse {
+      0%   { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    .wa-float__btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37, 211, 102, 0.45);
+    }
+    .wa-float__btn:hover::before,
+    .wa-float__btn:hover::after { animation-play-state: paused; opacity: 0; }
+    .wa-float__btn svg { color: white; position: relative; z-index: 1; }
+
+    /* ═══════════════════════════════════════
+       MOBILE MENU
+    ═══════════════════════════════════════ */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      transform: translateX(100%);
+      transition: transform 0.5s var(--ease);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+    .mobile-menu__close {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .mobile-menu__close:hover {
+      background: var(--gold-rgba);
+      transform: rotate(90deg);
+    }
+    .mobile-menu__deco {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      white-space: nowrap;
+    }
+    .mobile-menu__deco span {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.4;
+    }
+    .mobile-menu__deco::before,
+    .mobile-menu__deco::after {
+      content: '';
+      width: 40px;
+      height: 1px;
+      background: var(--gold-border);
+    }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--white);
+      transition: color 0.3s;
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .about__grid { grid-template-columns: 1fr; gap: 4rem; }
+      .about::before { font-size: 10rem; right: -5%; }
+      .diff__grid { grid-template-columns: 1fr; }
+      .diff__quote-box { position: static; margin-top: 2rem; max-width: 100%; }
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+      .areas__grid { grid-template-columns: 1fr 1fr; }
+      .results__grid { grid-template-columns: 1fr 1fr; }
+      .process__steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .process__steps::before { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__hamburger { display: flex; }
+      .hero__scroll { display: none; }
+      .areas__grid { grid-template-columns: 1fr; }
+      .results__grid { grid-template-columns: 1fr; }
+      .results__header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .results__note { text-align: left; }
+      .faq__grid { grid-template-columns: 1fr; gap: 3rem; }
+      .faq__heading { position: static; }
+      .footer__grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer__bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .about__badge { right: 0; bottom: -1rem; }
+      .process__steps { grid-template-columns: 1fr; }
+      .diff__bg-text, .about::before { display: none; }
+      .cta__corner { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════
+       PAGE LOADER
+  ══════════════════════════════════ -->
+  <div id="loader">
+    <div class="loader__mf">MF</div>
+    <div class="loader__bar"></div>
+    <div class="loader__label">Mendonça &amp; Ferreira Advocacia</div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SCROLL PROGRESS BAR
+  ══════════════════════════════════ -->
+  <div id="progress"></div>
+
+  <!-- ══════════════════════════════════
+       CUSTOM CURSOR
+  ══════════════════════════════════ -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
+
+  <!-- ══════════════════════════════════
+       NAVIGATION
+  ══════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="#" class="nav__logo">
+          <span class="nav__logo-mf">MF</span>
+          <span class="nav__logo-name">Mendonça &amp; Ferreira</span>
+        </a>
+        <ul class="nav__links">
+          <li><a href="#areas">Atuação</a></li>
+          <li><a href="#escritorio">Escritório</a></li>
+          <li><a href="#processo">Como Atuamos</a></li>
+          <li><a href="#resultados">Resultados</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+        <a href="https://api.whatsapp.com/send?phone=5511953545061&text=Olá,%20vim%20pelo%20site%20da%20Mendonça%20%26%20Ferreira%20Advocacia%20e%20preciso%20de%20uma%20consulta." class="nav__cta" target="_blank">Consulta Estratégica</a>
+        <button class="nav__hamburger" id="hamburger" aria-label="Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu__close" id="mobileClose" aria-label="Fechar menu">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </div>
+    <a href="#areas" onclick="closeMobileMenu()">Atuação</a>
+    <a href="#escritorio" onclick="closeMobileMenu()">Escritório</a>
+    <a href="#processo" onclick="closeMobileMenu()">Como Atuamos</a>
+    <a href="#resultados" onclick="closeMobileMenu()">Resultados</a>
+    <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
+    <a href="https://api.whatsapp.com/send?phone=5511953545061" class="btn btn-filled" target="_blank">
+      <span>Falar com o Escritório</span>
+    </a>
+    <div class="mobile-menu__deco">
+      <span>◆ Mendonça &amp; Ferreira ◆</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero__bg" id="heroBg"></div>
+    <div class="hero__overlay"></div>
+    <div class="hero__gold-line"></div>
+    <div class="hero__h-line"></div>
+
+    <div class="container">
+      <div class="hero__content">
+        <div class="hero__tag">
+          <span class="label">Advocacia Criminal de Alto Nível</span>
+        </div>
+        <h1 class="hero__headline">
+          Quando o jogo<br>
+          é <em>complexo,</em><br>
+          a defesa precisa<br>
+          ser superior.
+        </h1>
+        <p class="hero__sub">
+          Crimes empresariais, ambientais, tributários e de colarinho branco exigem uma estratégia que vai além da sala de audiência. Aqui, cada caso é tratado com a precisão e o peso que merece.
+        </p>
+        <div class="hero__actions">
+          <a href="https://api.whatsapp.com/send?phone=5511953545061&text=Olá,%20preciso%20de%20uma%20consulta%20estratégica%20com%20a%20Mendonça%20%26%20Ferreira%20Advocacia." class="btn btn-filled" target="_blank">
+            <span>Solicitar Consulta Estratégica</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#areas" class="btn">
+            <span>Ver Áreas de Atuação</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero__scroll">
+      <div class="hero__scroll-line"></div>
+      <span>Role</span>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       STRIP
+  ══════════════════════════════════ -->
+  <div class="strip">
+    <div class="strip__inner">
+      <span class="strip__item">Crime Empresarial</span>
+      <span class="strip__item">Crime Ambiental</span>
+      <span class="strip__item">Crime Tributário</span>
+      <span class="strip__item">Lavagem de Dinheiro</span>
+      <span class="strip__item">Corrupção</span>
+      <span class="strip__item">Tribunal do Júri</span>
+      <span class="strip__item">Habeas Corpus</span>
+      <span class="strip__item">Recursos nos Tribunais Superiores</span>
+      <span class="strip__item">Execução Penal</span>
+      <span class="strip__item">Crime Empresarial</span>
+      <span class="strip__item">Crime Ambiental</span>
+      <span class="strip__item">Crime Tributário</span>
+      <span class="strip__item">Lavagem de Dinheiro</span>
+      <span class="strip__item">Corrupção</span>
+      <span class="strip__item">Tribunal do Júri</span>
+      <span class="strip__item">Habeas Corpus</span>
+      <span class="strip__item">Recursos nos Tribunais Superiores</span>
+      <span class="strip__item">Execução Penal</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       ABOUT / POSICIONAMENTO
+  ══════════════════════════════════ -->
+  <section class="about" id="escritorio">
+    <div class="container">
+      <div class="about__grid">
+
+        <div class="about__image-wrap reveal-left">
+          <img class="about__image" src="/images/advogado.jpg" alt="Dr. Mendonça — Mendonça & Ferreira Advocacia" />
+          <div class="about__badge">
+            <span class="about__badge-num">10+</span>
+            <span class="about__badge-text">Anos de<br>Experiência</span>
+          </div>
+        </div>
+
+        <div class="about__text-col">
+          <div class="about__eyebrow reveal">
+            <span class="gold-line"></span>
+            <span class="label">O Escritório</span>
+          </div>
+          <h2 class="about__heading reveal reveal-delay-1">
+            Estratégia jurídica de<br>
+            alto nível para <em>casos<br>
+            que não admitem erros.</em>
+          </h2>
+          <p class="about__text reveal reveal-delay-2">
+            A Mendonça &amp; Ferreira Advocacia nasceu da convicção de que crimes complexos — empresariais, ambientais, tributários — exigem um nível de preparo que vai muito além da defesa convencional. Aqui, cada processo é tratado como uma operação estratégica.
+          </p>
+          <p class="about__text reveal reveal-delay-2">
+            Atuamos com total discrição, construindo defesas sólidas e personalizadas para cada cliente. Seja na fase de investigação, no tribunal de júri ou nos tribunais superiores, a nossa presença faz diferença.
+          </p>
+          <div class="about__divider reveal reveal-delay-3"></div>
+          <div class="about__stats reveal reveal-delay-3">
+            <div>
+              <div class="about__stat-num" data-count="10" data-suffix="+">10+</div>
+              <div class="about__stat-label">Anos de Atuação</div>
+            </div>
+            <div>
+              <div class="about__stat-num">STJ / STF</div>
+              <div class="about__stat-label">Sustentações nos Tribunais Superiores</div>
+            </div>
+            <div>
+              <div class="about__stat-num" data-count="100" data-suffix="%">100%</div>
+              <div class="about__stat-label">Sigilo e Confidencialidade</div>
+            </div>
+            <div>
+              <div class="about__stat-num">OAB</div>
+              <div class="about__stat-label">Regularidade e Ética Comprovadas</div>
+            </div>
+          </div>
+          <div style="margin-top:3rem" class="reveal reveal-delay-4">
+            <a href="https://api.whatsapp.com/send?phone=5511953545061" class="btn" target="_blank">
+              <span>Falar com o Escritório</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       ÁREAS DE ATUAÇÃO
+  ══════════════════════════════════ -->
+  <section class="areas" id="areas">
+    <div class="container">
+      <div class="areas__header reveal">
+        <span class="gold-line" style="margin:0 auto 1rem;"></span>
+        <span class="label">Especialidades</span>
+        <h2 class="areas__heading">Defesa <em>estratégica</em> em todas<br>as frentes do direito penal</h2>
+      </div>
+
+      <div class="areas__grid">
+
+        <div class="area-card area-card--highlight reveal">
+          <span class="area-card__num">01</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/>
+          </svg>
+          <div class="area-card__tag">★ Especialidade Principal</div>
+          <h3 class="area-card__title">Crime Empresarial &amp; Colarinho Branco</h3>
+          <p class="area-card__text">Defesa de executivos, sócios e gestores em investigações de fraude corporativa, estelionato, desvio de recursos e crimes contra a ordem econômica. Sigilo absoluto e estratégia desde a fase inquisitorial.</p>
+        </div>
+
+        <div class="area-card reveal reveal-delay-1">
+          <span class="area-card__num">02</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/>
+          </svg>
+          <div class="area-card__tag">Alta Complexidade</div>
+          <h3 class="area-card__title">Crime Ambiental</h3>
+          <p class="area-card__text">Atuação especializada em processos envolvendo empresas e pessoas físicas investigadas por infrações ambientais, com foco em extinção da punibilidade, suspensão condicional e TAC.</p>
+        </div>
+
+        <div class="area-card reveal reveal-delay-2">
+          <span class="area-card__num">03</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+          <div class="area-card__tag">Alta Complexidade</div>
+          <h3 class="area-card__title">Crime Tributário &amp; Sonegação</h3>
+          <p class="area-card__text">Defesa técnica em casos de sonegação fiscal, crimes contra a ordem tributária e descaminho. Trabalho integrado com assessoria contábil para construção da melhor estratégia de extinção.</p>
+        </div>
+
+        <div class="area-card reveal">
+          <span class="area-card__num">04</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+          <div class="area-card__tag">Atendimento 24h</div>
+          <h3 class="area-card__title">Prisão em Flagrante &amp; Custódia</h3>
+          <p class="area-card__text">Assistência imediata nas primeiras horas após a prisão. Análise da legalidade do flagrante, pedido de relaxamento e atuação cirúrgica na audiência de custódia para garantir a liberdade.</p>
+        </div>
+
+        <div class="area-card reveal reveal-delay-1">
+          <span class="area-card__num">05</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"/>
+          </svg>
+          <div class="area-card__tag">Tribunais Superiores</div>
+          <h3 class="area-card__title">Habeas Corpus &amp; Recursos</h3>
+          <p class="area-card__text">Atuação nos Tribunais de Justiça, STJ e STF. Sustentações orais, recursos especiais e extraordinários. Defesa até a última instância com total comprometimento técnico.</p>
+        </div>
+
+        <div class="area-card reveal reveal-delay-2">
+          <span class="area-card__num">06</span>
+          <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <div class="area-card__tag">Pleno Tribunal</div>
+          <h3 class="area-card__title">Tribunal do Júri</h3>
+          <p class="area-card__text">Defesa completa em crimes dolosos contra a vida — do indiciamento ao plenário. Construção de teses defensivas robustas, domínio do rito e habilidade retórica para convencer os jurados.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       DIFERENCIAIS
+  ══════════════════════════════════ -->
+  <section class="diff">
+    <div class="diff__bg-text">Estratégia</div>
+    <div class="container">
+      <div class="diff__grid">
+        <div>
+          <span class="gold-line reveal"></span>
+          <span class="label reveal">Por que nos escolher</span>
+          <h2 class="diff__heading reveal reveal-delay-1">
+            Uma defesa que vai<br>
+            além do processo.<br>
+            <em>Estratégia total.</em>
+          </h2>
+          <ul class="diff__list">
+            <li class="diff__item reveal reveal-delay-1">
+              <span class="diff__num">01</span>
+              <div>
+                <div class="diff__item-title">Atendimento Sigiloso e Discreto</div>
+                <p class="diff__item-text">Casos de alta complexidade exigem confidencialidade absoluta. Todos os atendimentos são protegidos pelo sigilo profissional, sem exceção.</p>
+              </div>
+            </li>
+            <li class="diff__item reveal reveal-delay-2">
+              <span class="diff__num">02</span>
+              <div>
+                <div class="diff__item-title">Defesa Construída Desde a Investigação</div>
+                <p class="diff__item-text">Não esperamos a denúncia para agir. Entramos no caso o mais cedo possível para moldar o cenário ainda na fase policial e ministerial.</p>
+              </div>
+            </li>
+            <li class="diff__item reveal reveal-delay-3">
+              <span class="diff__num">03</span>
+              <div>
+                <div class="diff__item-title">Experiência nos Tribunais Superiores</div>
+                <p class="diff__item-text">STJ e STF. Sustentamos oralmente perante as cortes mais altas do país, garantindo que a defesa chegue até onde for necessário.</p>
+              </div>
+            </li>
+            <li class="diff__item reveal reveal-delay-4">
+              <span class="diff__num">04</span>
+              <div>
+                <div class="diff__item-title">Comunicação Clara e Transparente</div>
+                <p class="diff__item-text">Você sempre sabe o que está acontecendo no seu processo. Sem jargão técnico desnecessário — apenas clareza e objetividade.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="diff__visual reveal-right">
+          <img class="diff__image" src="/images/escritorio.jpg" alt="Escritório Mendonça & Ferreira" />
+          <div class="diff__quote-box">
+            <p class="diff__quote-text">"A justiça sem força é impotente. A força sem justiça é tirânica."</p>
+            <span class="diff__quote-attr">— Blaise Pascal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       PROCESSO
+  ══════════════════════════════════ -->
+  <section class="process" id="processo">
+    <div class="container">
+      <div class="process__header reveal">
+        <span class="gold-line" style="margin:0 auto 1rem;"></span>
+        <span class="label">Como Atuamos</span>
+        <h2 class="process__heading">Nossa metodologia de <em>defesa estratégica</em></h2>
+      </div>
+
+      <div class="process__steps" id="processSteps">
+        <div class="process__step reveal">
+          <div class="process__step-dot" data-step="0">I</div>
+          <h3 class="process__step-title">Consulta Sigilosa</h3>
+          <p class="process__step-text">Análise inicial completa do caso. Identificamos riscos, janelas de defesa e construímos um panorama claro da situação jurídica.</p>
+        </div>
+        <div class="process__step reveal reveal-delay-1">
+          <div class="process__step-dot" data-step="1">II</div>
+          <h3 class="process__step-title">Diagnóstico &amp; Estratégia</h3>
+          <p class="process__step-text">Mapeamos as provas, identificamos nulidades e elaboramos a tese de defesa mais sólida possível para o contexto do seu caso.</p>
+        </div>
+        <div class="process__step reveal reveal-delay-2">
+          <div class="process__step-dot" data-step="2">III</div>
+          <h3 class="process__step-title">Execução Técnica</h3>
+          <p class="process__step-text">Atuação em todas as fases do processo: investigação, instrução, audiências, tribuna do júri ou tribunais superiores — com total dedicação.</p>
+        </div>
+        <div class="process__step reveal reveal-delay-3">
+          <div class="process__step-dot" data-step="3">IV</div>
+          <h3 class="process__step-title">Resultado &amp; Acompanhamento</h3>
+          <p class="process__step-text">Comunicação constante sobre cada movimentação. Você nunca fica sem saber o que está acontecendo com o seu processo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       RESULTADOS / DEPOIMENTOS
+  ══════════════════════════════════ -->
+  <section class="results" id="resultados">
+    <div class="container">
+      <div class="results__header">
+        <div>
+          <span class="gold-line reveal-left"></span>
+          <span class="label reveal-left reveal-delay-1">Resultados</span>
+          <h2 class="results__heading reveal reveal-delay-2">O que <em>nossos clientes</em><br>dizem sobre nós</h2>
+        </div>
+        <p class="results__note reveal-right">
+          * Identidades preservadas pelo sigilo profissional. Casos reais com desfechos favoráveis.
+        </p>
+      </div>
+
+      <div class="results__grid">
+
+        <div class="result-card reveal">
+          <div class="result-card__type">Crime Ambiental — Pessoa Jurídica</div>
+          <h3 class="result-card__outcome">Extinção da punibilidade obtida após acordo com IBAMA</h3>
+          <p class="result-card__text">Empresa rural do interior de SP enfrentava processo criminal por supressão de vegetação nativa. A Mendonça &amp; Ferreira conduziu o TAC e conseguiu a extinção da punibilidade para todos os sócios.</p>
+          <div class="result-card__client">
+            <div class="result-card__avatar">E.S.</div>
+            <div>
+              <div class="result-card__name">E. S.</div>
+              <div class="result-card__role">Empresário Rural, SP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-card reveal reveal-delay-1">
+          <div class="result-card__type">Crime Tributário — Diretor de Empresa</div>
+          <h3 class="result-card__outcome">Absolvição em 1ª instância por atipicidade da conduta</h3>
+          <p class="result-card__text">Diretor financeiro denunciado por sonegação fiscal de valores superiores a R$ 4 milhões. A defesa demonstrou a ausência de dolo específico e obteve absolvição sumária antes mesmo do início da instrução.</p>
+          <div class="result-card__client">
+            <div class="result-card__avatar">R.M.</div>
+            <div>
+              <div class="result-card__name">R. M.</div>
+              <div class="result-card__role">Diretor Financeiro, SP</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-card reveal reveal-delay-2">
+          <div class="result-card__type">Prisão em Flagrante — Tráfico Qualificado</div>
+          <h3 class="result-card__outcome">Relaxamento do flagrante e substituição por liberdade provisória</h3>
+          <p class="result-card__text">Preso em situação de flagrante por suposto tráfico, o cliente obteve relaxamento imediato após comprovação de ilegalidade na abordagem policial. Atuação nas primeiras 6 horas após a prisão.</p>
+          <div class="result-card__client">
+            <div class="result-card__avatar">F.L.</div>
+            <div>
+              <div class="result-card__name">F. L.</div>
+              <div class="result-card__role">Cliente, SP</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CTA CENTRAL
+  ══════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta__corner cta__corner--tl"></div>
+    <div class="cta__corner cta__corner--tr"></div>
+    <div class="cta__corner cta__corner--bl"></div>
+    <div class="cta__corner cta__corner--br"></div>
+    <div class="container">
+      <span class="gold-line reveal" style="margin: 0 auto 1rem;"></span>
+      <span class="label reveal">Pronto para agir?</span>
+      <h2 class="cta__heading reveal-scale reveal-delay-1">
+        Cada dia conta.<br>
+        <em>Fale conosco agora.</em>
+      </h2>
+      <p class="cta__sub reveal reveal-delay-2">
+        Em casos criminais, o tempo é um fator crítico. Quanto antes você tiver uma defesa sólida, maiores as chances de um desfecho favorável. A consulta inicial é sigilosa e sem compromisso.
+      </p>
+      <div class="cta__actions reveal reveal-delay-3">
+        <a href="https://api.whatsapp.com/send?phone=5511953545061&text=Olá,%20vim%20pelo%20site%20e%20preciso%20de%20uma%20consulta%20sigilosa%20com%20a%20Mendonça%20%26%20Ferreira%20Advocacia." class="btn btn-filled" target="_blank">
+          <span>Consulta pelo WhatsApp</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:contato@mendonçaeferreira.adv.br" class="btn">
+          <span>Enviar E-mail</span>
+        </a>
+      </div>
+      <p class="cta__disclaimer reveal">Sigilo garantido pelo Estatuto da OAB. Seus dados nunca serão compartilhados.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FAQ
+  ══════════════════════════════════ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="faq__grid">
+        <div>
+          <span class="gold-line reveal"></span>
+          <span class="label reveal">Dúvidas Frequentes</span>
+          <h2 class="faq__heading reveal reveal-delay-1">
+            Perguntas<br>
+            que todo<br>
+            cliente tem.
+            <em> Respondemos.</em>
+          </h2>
+        </div>
+
+        <div class="faq__list reveal">
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">Meu caso envolve uma empresa. Vocês atuam na defesa de pessoas jurídicas?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Sim. A Mendonça &amp; Ferreira atua especificamente em crimes que envolvem empresas e seus gestores, como crimes ambientais, tributários e contra a ordem econômica. Trabalhamos tanto na defesa da pessoa jurídica quanto dos sócios, diretores e executivos individualmente.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">Quanto custa contratar o escritório?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Os honorários variam conforme a complexidade do caso, a fase processual e o tipo de crime. Prezamos pela transparência total desde o início: na consulta inicial, você recebe uma proposta clara, sem surpresas. O investimento em uma defesa de qualidade é incomparável às consequências de uma defesa inadequada.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">Estou sendo investigado, mas ainda não fui preso ou denunciado. Vocês podem atuar nessa fase?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Sim, e é exatamente nessa fase que a atuação do advogado é mais estratégica. Quanto antes você tiver representação jurídica, mais instrumentos temos para influenciar o desfecho do caso — desde a fase policial até eventual pedido de arquivamento junto ao Ministério Público.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">As informações que eu compartilhar são sigilosas?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Absolutamente. O sigilo profissional entre advogado e cliente é protegido pelo Estatuto da OAB e pela Constituição Federal. Tudo o que você nos conta está protegido por lei, sem qualquer exceção. Isso inclui desde o primeiro contato via WhatsApp até as reuniões presenciais.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">Vocês atendem fora do Estado de São Paulo?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Sim. Atuamos em todo o território nacional, com foco especial nos tribunais superiores (STJ e STF) em Brasília. Para casos em outros estados, trabalhamos em parceria com advogados locais de confiança para garantir a melhor representação em cada jurisdição.</p>
+            </div>
+          </div>
+
+          <div class="faq__item">
+            <div class="faq__question">
+              <span class="faq__q-text">Tive experiências ruins com outros advogados. Como posso confiar?</span>
+              <svg class="faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div class="faq__answer">
+              <p class="faq__answer-text">Entendemos essa preocupação. Nossa abordagem é diferente: desde o primeiro contato, você recebe clareza sobre o que é possível, sobre os riscos e sobre o que faremos. Não prometemos o impossível. Prometemos dedicação total, transparência e uma defesa construída com rigor técnico.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__watermark">MF</div>
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <div class="footer__brand-mf">MF</div>
+          <div class="footer__brand-name">Mendonça &amp; Ferreira Advocacia</div>
+          <p class="footer__brand-text">Defesa criminal estratégica para casos que não admitem improviso. Sigilo, técnica e resultado.</p>
+          <div class="footer__social">
+            <a href="https://instagram.com/mendonçaeferreira.adv" class="footer__social-link" target="_blank" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=5511953545061" class="footer__social-link" target="_blank" aria-label="WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div>
+          <div class="footer__col-title">Áreas de Atuação</div>
+          <ul class="footer__links">
+            <li><a href="#areas">Crime Empresarial</a></li>
+            <li><a href="#areas">Crime Ambiental</a></li>
+            <li><a href="#areas">Crime Tributário</a></li>
+            <li><a href="#areas">Tribunal do Júri</a></li>
+            <li><a href="#areas">Habeas Corpus</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title">Links</div>
+          <ul class="footer__links">
+            <li><a href="#escritorio">O Escritório</a></li>
+            <li><a href="#processo">Como Atuamos</a></li>
+            <li><a href="#resultados">Resultados</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer__col-title">Contato</div>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            +55 (11) 95354-5061
+          </div>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            contato@mendonçaeferreira.adv.br
+          </div>
+          <div class="footer__contact-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @mendonçaeferreira.adv
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <span>© 2025 Mendonça &amp; Ferreira Advocacia. Todos os direitos reservados.</span>
+        <span>OAB/SP — Advocacia Criminal Especializada</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════
+       WHATSAPP FLOAT
+  ══════════════════════════════════ -->
+  <a class="wa-float" href="https://api.whatsapp.com/send?phone=5511953545061&text=Olá,%20vim%20pelo%20site%20da%20Mendonça%20%26%20Ferreira%20Advocacia%20e%20preciso%20de%20uma%20consulta." target="_blank" aria-label="WhatsApp">
+    <span class="wa-float__label">Fale Agora</span>
+    <div class="wa-float__btn">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+      </svg>
+    </div>
+  </a>
+
+  <!-- ══════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════ -->
+  <script>
+    // ── Page Loader ──
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 1400);
+    });
+
+    // ── Scroll Progress Bar ──
+    const progressBar = document.getElementById('progress');
+    function updateProgress() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      progressBar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    // ── Custom Cursor ──
+    const cursor = document.getElementById('cursor');
+    const cursorDot = document.getElementById('cursorDot');
+    if (cursor && cursorDot && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(${mouseX - 2}px, ${mouseY - 2}px)`;
+      });
+
+      function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.transform = `translate(${cursorX - 17}px, ${cursorY - 17}px)`;
+        requestAnimationFrame(animateCursor);
+      }
+      animateCursor();
+
+      const hoverTargets = document.querySelectorAll('a, button, .area-card, .faq__question, .result-card');
+      hoverTargets.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      });
+    }
+
+    // ── Navbar scroll ──
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── Mobile menu ──
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileClose = document.getElementById('mobileClose');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.add('open');
+      hamburger.classList.add('active');
+    });
+    mobileClose.addEventListener('click', closeMobileMenu);
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+      hamburger.classList.remove('active');
+    }
+
+    // ── Scroll reveal (all variants) ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    // ── Counter animation ──
+    function animateCount(el, target, suffix) {
+      const duration = 1800;
+      const start = performance.now();
+      const update = (now) => {
+        const elapsed = now - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const target = parseInt(e.target.dataset.count);
+          const suffix = e.target.dataset.suffix || '';
+          animateCount(e.target, target, suffix);
+          counterObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+    // ── Process step dot activation ──
+    const stepDots = document.querySelectorAll('.process__step-dot');
+    const stepObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const idx = parseInt(e.target.dataset.step);
+          setTimeout(() => e.target.classList.add('active'), idx * 180);
+          stepObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    stepDots.forEach(dot => stepObserver.observe(dot));
+
+    // ── FAQ accordion ──
+    document.querySelectorAll('.faq__question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq__item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ── Hero parallax ──
+    const heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', () => {
+      if (heroBg) {
+        heroBg.style.transform = `scale(1) translateY(${window.scrollY * 0.25}px)`;
+      }
+    }, { passive: true });
+  </script>
+
+</body>
+</html>
