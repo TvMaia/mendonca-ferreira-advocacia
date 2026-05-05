@@ -15,7 +15,7 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Mendonça & Ferreira Advocacia" />
   <meta property="og:description" content="Defesa criminal de alto nível para casos complexos. Crimes empresariais, ambientais e tributários." />
-  <meta property="og:image" content="/og-image.jpg" />
+  <meta property="og:image" content={`${import.meta.env.BASE_URL}og-image.jpg`} />
   <meta property="og:type" content="website" />
 
   <!-- Fonts -->
@@ -409,7 +409,7 @@
     .hero__bg {
       position: absolute;
       inset: 0;
-      background-image: url('/images/hero-bg.jpg');
+      /* background definido via inline style para suportar base path */
       background-size: cover;
       background-position: center top;
       transform: scale(1.05);
@@ -1738,7 +1738,7 @@
        HERO
   ══════════════════════════════════ -->
   <section class="hero">
-    <div class="hero__bg" id="heroBg"></div>
+    <div class="hero__bg" id="heroBg" style={`background-image: url('${import.meta.env.BASE_URL}images/hero-bg.jpg')`}></div>
     <div class="hero__overlay"></div>
     <div class="hero__gold-line"></div>
     <div class="hero__h-line"></div>
@@ -1809,7 +1809,7 @@
       <div class="about__grid">
 
         <div class="about__image-wrap reveal-left">
-          <img class="about__image" src="/images/advogado.jpg" alt="Dr. Mendonça — Mendonça & Ferreira Advocacia" />
+          <img class="about__image" src={`${import.meta.env.BASE_URL}images/advogado.jpg`} alt="Dr. Mendonça — Mendonça & Ferreira Advocacia" />
           <div class="about__badge">
             <span class="about__badge-num">10+</span>
             <span class="about__badge-text">Anos de<br>Experiência</span>
@@ -1987,7 +1987,7 @@
         </div>
 
         <div class="diff__visual reveal-right">
-          <img class="diff__image" src="/images/escritorio.jpg" alt="Escritório Mendonça & Ferreira" />
+          <img class="diff__image" src={`${import.meta.env.BASE_URL}images/escritorio.jpg`} alt="Escritório Mendonça & Ferreira" />
           <div class="diff__quote-box">
             <p class="diff__quote-text">"A justiça sem força é impotente. A força sem justiça é tirânica."</p>
             <span class="diff__quote-attr">— Blaise Pascal</span>
