@@ -2,6 +2,6 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://TvMaia.github.io',
-  base: '/mendonca-ferreira-advocacia/',
+  site: 'https://mendoncaferreiraadv.com.br',
+  base: '/',
 });
