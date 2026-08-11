@@ -1,0 +1,61 @@
+---
+import AreaPage from '../components/AreaPage.astro';
+const lawyer = {
+  name: 'Dr. Ramyson Trajano',
+  role: 'Direito Civil e Empresarial',
+  img: 'adv-ramyson.jpg',
+  oab: 'OAB/[UF] nº [0000]',
+  bio: 'Advogado atuante no direito civil, da resolução de conflitos familiares e de consumo à recuperação de crédito.',
+};
+---
+<AreaPage
+  title="Direito Civil"
+  subtitle="Soluções técnicas para conflitos familiares, patrimoniais e de consumo."
+  metaDesc="Direito civil: família e sucessões, consumidor, ações de cobrança e direito condominial. Assessoria com o Dr. Ramyson Trajano."
+  heroImg="area-civil.jpg"
+  roman="III"
+  lawyer={lawyer}
+  waMsg="Olá, vim pela página de Direito Civil e gostaria de tirar uma dúvida sobre o meu caso."
+>
+  <p class="svc-lead">Os conflitos do <em>dia a dia</em> também têm solução jurídica.</p>
+  <p>O Dr. Ramyson Trajano atua no Direito Civil em suas diversas frentes, com assessoria e representação a pessoas físicas e jurídicas em quatro grandes áreas de concentração.</p>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">01</span>Direito de Família e Sucessões</h3>
+    <ul class="svc-list">
+      <li>Divórcio consensual e litigioso; dissolução de união estável.</li>
+      <li>Guarda e regulamentação de visitas.</li>
+      <li>Ações de alimentos (fixação, revisão e exoneração).</li>
+      <li>Inventário, partilha de bens e planejamento sucessório.</li>
+    </ul>
+  </div>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">02</span>Direito do Consumidor</h3>
+    <ul class="svc-list">
+      <li>Cobranças indevidas e negativação irregular do nome.</li>
+      <li>Vícios em produtos e serviços; atrasos e cancelamentos de voos.</li>
+      <li>Revisão de contratos bancários e financeiros.</li>
+      <li>Reparação por danos morais e materiais em relações de consumo.</li>
+    </ul>
+  </div>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">03</span>Ações de Cobrança</h3>
+    <ul class="svc-list">
+      <li>Cobrança judicial e extrajudicial de dívidas.</li>
+      <li>Execução de títulos executivos e ação monitória.</li>
+      <li>Recuperação de crédito para pessoas físicas e empresas.</li>
+    </ul>
+  </div>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">04</span>Direito Condominial</h3>
+    <ul class="svc-list">
+      <li>Assessoria a síndicos e condôminos.</li>
+      <li>Cobrança de taxas condominiais inadimplentes.</li>
+      <li>Conflitos entre condôminos e revisão de convenção e regimento interno.</li>
+      <li>Impugnação ou validação de assembleias.</li>
+    </ul>
+  </div>
+</AreaPage>

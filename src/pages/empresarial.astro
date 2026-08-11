@@ -1,0 +1,36 @@
+---
+import AreaPage from '../components/AreaPage.astro';
+const lawyer = {
+  name: 'Dr. Ramyson Trajano',
+  role: 'Direito Empresarial e Civil',
+  img: 'adv-ramyson.jpg',
+  oab: 'OAB/[UF] nº [0000]',
+  bio: 'Advogado com atuação preventiva e contenciosa no direito empresarial, ao lado de empresas de pequeno e médio porte.',
+};
+---
+<AreaPage
+  title="Direito Empresarial"
+  subtitle="Suporte jurídico estratégico para empresas em todas as fases do negócio."
+  metaDesc="Direito empresarial: contratos, societário, litígios entre sócios, recuperação de crédito e proteção patrimonial. Assessoria com o Dr. Ramyson Trajano."
+  heroImg="area-empresarial.jpg"
+  roman="IV"
+  lawyer={lawyer}
+  waMsg="Olá, vim pela página de Direito Empresarial e gostaria de tirar uma dúvida sobre a minha empresa."
+>
+  <p class="svc-lead">Prevenir problemas custa menos do que <em>resolvê-los depois.</em></p>
+  <p>O Dr. Ramyson Trajano oferece consultoria e atuação contenciosa em Direito Empresarial, com foco em empresas de pequeno e médio porte. Atua de forma preventiva e reativa, ajudando o empresário a estruturar operações seguras, reduzir riscos jurídicos e resolver conflitos com eficiência.</p>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">—</span>Onde ele apoia a sua empresa</h3>
+    <ul class="svc-list">
+      <li>Elaboração e revisão de <strong>contratos comerciais</strong>.</li>
+      <li>Constituição, alteração e dissolução <strong>societária</strong>.</li>
+      <li>Litígios entre sócios.</li>
+      <li>Recuperação de crédito empresarial.</li>
+      <li>Proteção patrimonial da atividade empresarial.</li>
+      <li>Representação em disputas comerciais e negociações estratégicas.</li>
+    </ul>
+  </div>
+
+  <p>Seja para estruturar o negócio com segurança ou para resolver um conflito já instalado, a atuação é orientada a decisões práticas e ao menor risco para a empresa.</p>
+</AreaPage>

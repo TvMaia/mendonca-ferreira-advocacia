@@ -1,0 +1,37 @@
+---
+import AreaPage from '../components/AreaPage.astro';
+const lawyer = {
+  name: 'Dr. Mailson Mendonça Ferreira',
+  role: 'Direito Criminal',
+  img: 'advogado.jpg',
+  oab: 'OAB/SP 355.869',
+  bio: 'Advogado criminalista, atua com sigilo e estratégia na defesa de casos complexos, da investigação aos tribunais superiores.',
+};
+---
+<AreaPage
+  title="Direito Criminal"
+  subtitle="Defesa criminal estratégica e discreta para casos que não admitem improviso."
+  metaDesc="Defesa criminal estratégica: crimes empresariais, ambientais e tributários, tribunal do júri, habeas corpus e recursos no STJ e STF. Atendimento sigiloso com o Dr. Mailson Mendonça Ferreira."
+  heroImg="area-criminal.jpg"
+  roman="V"
+  lawyer={lawyer}
+  waMsg="Olá, vim pela página de Direito Criminal e preciso de um atendimento sigiloso."
+>
+  <p class="svc-lead">Casos criminais se definem <em>cedo.</em> Quanto antes existe uma defesa técnica, mais caminhos há.</p>
+  <p>O Dr. Mailson Mendonça Ferreira atua na defesa criminal de pessoas físicas e jurídicas, com atenção especial a crimes empresariais, ambientais, tributários e de colarinho branco. Cada caso é tratado com sigilo absoluto e uma estratégia construída desde a fase de investigação — sem esperar a denúncia para agir.</p>
+
+  <div class="svc-block">
+    <h3 class="svc-block-title"><span class="n">—</span>Frentes de atuação</h3>
+    <ul class="svc-list">
+      <li>Crimes empresariais e contra a ordem econômica.</li>
+      <li>Crimes ambientais.</li>
+      <li>Crimes tributários e sonegação fiscal.</li>
+      <li>Prisão em flagrante e audiência de custódia.</li>
+      <li>Tribunal do Júri.</li>
+      <li>Habeas corpus e recursos no STJ e no STF.</li>
+      <li>Execução penal.</li>
+    </ul>
+  </div>
+
+  <p>O atendimento é conduzido com total discrição. O sigilo entre advogado e cliente é protegido pelo Estatuto da OAB e pela Constituição, do primeiro contato em diante.</p>
+</AreaPage>
