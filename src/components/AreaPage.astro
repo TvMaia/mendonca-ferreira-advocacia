@@ -44,7 +44,7 @@ const waLink = `https://api.whatsapp.com/send?phone=${WA}&text=${encodeURICompon
               <img class="lawyer__img" src={`${B}images/${lawyer.img}`} alt={lawyer.name} />
             </div>
             <div class="lawyer__meta">
-              <span class="label">Advogado responsável</span>
+              <span class="label">{lawyer.name.startsWith('Dra.') ? 'Advogada' : 'Advogado'} responsável</span>
               <h3 class="lawyer__name">{lawyer.name}</h3>
               <p class="lawyer__role">{lawyer.role}</p>
               <p class="lawyer__oab">{lawyer.oab}</p>
