@@ -85,7 +85,7 @@ const socios = [
       </div>
       <div class="areas__grid">
         {areas.map((a, i) => (
-          <a href={`${B}${a.slug}`} class="area-card reveal">
+          <a href={`${B}${a.slug}/`} class="area-card reveal">
             <span class="area-card__num">{String(i + 1).padStart(2, '0')}</span>
             <svg class="area-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" set:html={a.icon}></svg>
             <h3 class="area-card__title">{a.nome}</h3>
@@ -130,7 +130,7 @@ const socios = [
 
           <div class="socios reveal reveal-delay-3">
             {socios.map((s) => (
-              <a href={`${B}${s.slug}`} class="socio">
+              <a href={`${B}${s.slug}/`} class="socio">
                 <span class="socio__name">{s.nome}</span>
                 <span class="socio__area">{s.area}</span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6l6 6-6 6"/></svg>

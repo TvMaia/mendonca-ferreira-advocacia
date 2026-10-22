@@ -28,8 +28,6 @@ const areas = [
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <!-- Preview para aprovacao (Mailson): nao indexar ate publicacao oficial -->
-  <meta name="robots" content="noindex, nofollow" />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content="website" />
@@ -256,7 +254,7 @@ const areas = [
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
             </a>
             <ul class="nav__submenu">
-              {areas.map((a) => (<li><a href={`${B}${a.slug}`}>{a.nome}</a></li>))}
+              {areas.map((a) => (<li><a href={`${B}${a.slug}/`}>{a.nome}</a></li>))}
             </ul>
           </li>
           <li><a href={`${B}#escritorio`}>O Escritório</a></li>
@@ -275,7 +273,7 @@ const areas = [
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
     <a href={B} data-mclose>Início</a>
-    {areas.map((a) => (<a href={`${B}${a.slug}`} data-mclose>{a.nome}</a>))}
+    {areas.map((a) => (<a href={`${B}${a.slug}/`} data-mclose>{a.nome}</a>))}
     <a href={`${B}#escritorio`} data-mclose>O Escritório</a>
     <span class="mobile-menu__sep">◆ Mendonça &amp; Ferreira ◆</span>
     <a href={waLink} class="btn btn-filled" target="_blank" rel="noopener"><span>Falar no WhatsApp</span></a>
@@ -295,7 +293,7 @@ const areas = [
         <div>
           <div class="footer__col-title">Áreas de Atuação</div>
           <ul class="footer__links">
-            {areas.map((a) => (<li><a href={`${B}${a.slug}`}>{a.nome}</a></li>))}
+            {areas.map((a) => (<li><a href={`${B}${a.slug}/`}>{a.nome}</a></li>))}
           </ul>
         </div>
         <div>
