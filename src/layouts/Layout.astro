@@ -5,6 +5,9 @@ const {
   title = 'Mendonça & Ferreira Advocacia',
   description = 'Escritório de advocacia com atuação em direito previdenciário, trabalhista, cível, empresarial e criminal. Atendimento próximo, do primeiro contato à decisão final.',
   areaWaMsg,
+  // A /criminal/ é destino de anúncio de urgência: a pessoa chega do Google
+  // e não pode levar 1,2s de tela preta antes de ler a promessa.
+  loader = true,
 } = Astro.props;
 
 const B = (import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/');
@@ -231,11 +234,13 @@ const areas = [
 </head>
 
 <body>
-  <div id="loader">
-    <div class="loader__mf">MF</div>
-    <div class="loader__bar"></div>
-    <div class="loader__label">Mendonça &amp; Ferreira Advocacia</div>
-  </div>
+  {loader && (
+    <div id="loader">
+      <div class="loader__mf">MF</div>
+      <div class="loader__bar"></div>
+      <div class="loader__label">Mendonça &amp; Ferreira Advocacia</div>
+    </div>
+  )}
 
   <div id="progress"></div>
   <div class="cursor" id="cursor"></div>
