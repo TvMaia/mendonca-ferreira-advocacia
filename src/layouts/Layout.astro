@@ -231,6 +231,64 @@ const areas = [
       *,*::before,*::after { animation-duration:0.001ms!important; animation-iteration-count:1!important; transition-duration:0.001ms!important; scroll-behavior:auto!important; }
     }
   </style>
+  <!-- Rastreamento de conversão — Google Ads, conta 11070660280.
+       Tag base + um único ouvinte delegado que cobre os 15 botões de WhatsApp
+       e telefone do site inteiro. Não há GA4 ligado: a visão por situação vem
+       das ações secundárias do próprio Google Ads.
+       Os botões de WhatsApp abrem em nova aba (target="_blank"), então a página
+       não é descarregada no clique e o evento tem tempo de ser enviado. -->
+  <script async is:inline src="https://www.googletagmanager.com/gtag/js?id=AW-11070660280"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'AW-11070660280');
+
+    // Rótulos das ações de conversão criadas na conta em 26/10/2026.
+    // "contato" é a primária: é o único número que alimenta o leilão da
+    // campanha (Maximizar Conversões aprende por volume, dividir o sinal em
+    // cinco ações faria ele aprender cinco coisas devagar). As outras quatro
+    // são secundárias — aparecem no relatório, não entram no leilão.
+    var CONV = {
+      contato:       'AW-11070660280/a66vCPDozKodELi9854p',
+      'preso-agora': 'AW-11070660280/Po5RCJ7Y0KodELi9854p',
+      investigado:   'AW-11070660280/wmpXCKHY0KodELi9854p',
+      condenacao:    'AW-11070660280/GRugCKTY0KodELi9854p',
+      ligacao:       'AW-11070660280/sSfQCKfY0KodELi9854p'
+    };
+
+    // Fase de captura, para disparar antes de qualquer handler que possa
+    // interromper a propagação do clique.
+    document.addEventListener('click', function (ev) {
+      var alvo = ev.target;
+      if (!alvo || !alvo.closest) return;
+      var a = alvo.closest('a[href]');
+      if (!a) return;
+
+      var href = a.getAttribute('href') || '';
+      var ehWhats = href.indexOf('api.whatsapp.com') !== -1;
+      var ehTel = href.indexOf('tel:') === 0;
+      if (!ehWhats && !ehTel) return;
+
+      gtag('event', 'conversion', { send_to: CONV.contato });
+
+      if (ehTel) {
+        gtag('event', 'conversion', { send_to: CONV.ligacao });
+        return;
+      }
+
+      // Na /criminal/ cada porta é um <div class="porta" id="preso-agora|
+      // investigado|condenacao">. Esse id já existe porque é o destino das
+      // âncoras de link direto por grupo de anúncio; aqui ele serve também
+      // como chave da conversão. Se um dia o id sair do div, isto para de
+      // identificar a situação (a primária continua contando).
+      var porta = a.closest('.porta');
+      var situacao = porta && porta.id;
+      if (situacao && CONV[situacao]) {
+        gtag('event', 'conversion', { send_to: CONV[situacao] });
+      }
+    }, true);
+  </script>
 </head>
 
 <body>
